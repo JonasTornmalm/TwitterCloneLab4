@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterClone.Web", "TwitterClone.Web\TwitterClone.Web.csproj", "{FD021744-5210-4EE9-9884-17B5A772FF5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterClone.Api.UserService", "TwitterClone.Api.UserService\TwitterClone.Api.UserService.csproj", "{ADDD4363-D22B-48DA-9AC3-56BEC17FEAE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterClone.Api.MessagingService", "TwitterClone.Api.MessagingService\TwitterClone.Api.MessagingService.csproj", "{FF88313B-FEFE-4D3E-A568-425E8496C610}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD021744-5210-4EE9-9884-17B5A772FF5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD021744-5210-4EE9-9884-17B5A772FF5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD021744-5210-4EE9-9884-17B5A772FF5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD021744-5210-4EE9-9884-17B5A772FF5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADDD4363-D22B-48DA-9AC3-56BEC17FEAE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADDD4363-D22B-48DA-9AC3-56BEC17FEAE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADDD4363-D22B-48DA-9AC3-56BEC17FEAE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADDD4363-D22B-48DA-9AC3-56BEC17FEAE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF88313B-FEFE-4D3E-A568-425E8496C610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF88313B-FEFE-4D3E-A568-425E8496C610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF88313B-FEFE-4D3E-A568-425E8496C610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF88313B-FEFE-4D3E-A568-425E8496C610}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A7B3B3A7-91FA-4795-BABE-E4601FCD5546}
+	EndGlobalSection
+EndGlobal
