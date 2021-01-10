@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterClone.Api.UserService.Data;
+using TwitterClone.Api.UserService.Data.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,24 +15,36 @@ namespace TwitterClone.Api.UserService.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        public UserController(AppDbContext context)
+        private readonly UserDbContext _context;
+        public UserController(UserDbContext context)
         {
             _context = context;
         }
 
         // GET: api/<UserController>
+        //[HttpGet]
+        //public async Task<IActionResult> GetAllAsync()
+        //{
+        //    return Ok(await _context.Users.ToListAsync());
+        //}
+
         [HttpGet]
-        public IEnumerable<User> Get()
+        public ActionResult<string> Get()
         {
-            return _context.Users.ToList();
+            return "webapi (with value 5)";
         }
 
         // GET api/<UserController>/5
-        [HttpGet("{id}")]
-        public User Get(int id)
+        [HttpGet]
+        [Route("{userId}", Name = "GetByUserId")]
+        public async Task<IActionResult> GetByUserId(string userId)
         {
-            return _context.Users.Find(id);
+            var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return Ok(customer);
         }
 
         // POST api/<UserController>

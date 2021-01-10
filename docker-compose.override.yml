@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  twitterclone.api.userservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+
+  twitterclone.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

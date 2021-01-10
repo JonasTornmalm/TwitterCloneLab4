@@ -7,10 +7,10 @@ using TwitterClone.Api.UserService.Data.Entities;
 
 namespace TwitterClone.Api.UserService.Data
 {
-    public class AppDbContext : DbContext
+    public class UserDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
         {
             Database.EnsureCreated();
         }

@@ -1,0 +1,35 @@
+﻿@model TwitterClone.Web.ViewModels.UsersViewModel
+@{ 
+    ViewData["Title"] = "User Overview";
+}
+<h3 id="PageTitle">User Management - overview</h3>
+
+@if (Model.Users != null)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Emailaddress</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model.Users)
+        {
+        <tr class="clickable">
+            <td>@customer.Name</td>
+            <td>@customer.Address</td>
+            <td>@customer.City</td>
+            <td>@customer.EmailAddress</td>
+        </tr>}
+    </tbody>
+</table>
+}
+else
+{
+    <h2>no data</h2>
+}
+
+

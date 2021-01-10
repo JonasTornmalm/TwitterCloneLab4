@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterClone.Api.UserService.Data;
 
 namespace TwitterClone.Api.UserService
 {
@@ -25,6 +27,9 @@ namespace TwitterClone.Api.UserService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add DBContext
+            var sqlConnectionString = Configuration.GetConnectionString("UserServiceCN");
+            services.AddDbContext<UserDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
