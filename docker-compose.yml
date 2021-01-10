@@ -3,13 +3,33 @@ version: '3.4'
 services:
 
   twitterclone.api.userservice:
+    ports:
+    - "5100:80"
     image: ${DOCKER_REGISTRY-}twittercloneapiuserservice
     build:
       context: .
       dockerfile: TwitterClone.Api.UserService/Dockerfile
+    volumes:
+    - ./TwitterClone.Api.UserService:/usr/src/app
+    depends_on:
+            - db
+
 
   twitterclone.web:
+    ports:
+    - "5200:80"
     image: ${DOCKER_REGISTRY-}twittercloneweb
     build:
       context: .
       dockerfile: TwitterClone.Web/Dockerfile
+    depends_on:
+      - twitterclone.api.userservice
+      - db
+
+  db:
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    environment:
+        SA_PASSWORD: "Adam123!"
+        ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"

@@ -10,7 +10,7 @@ namespace TwitterClone.Web.RESTClients
     public interface IUserServiceAPI
     {
         [Get("/user")]
-        Task<string> GetUsers();
+        Task<List<User>> GetUsers();
 
         [Get("/user/{id}")]
         Task<User> GetUserById([AliasAs("id")] string userId);

@@ -21,13 +21,11 @@ namespace TwitterClone.Web.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["Message"] = "Hello from webfrontend";
-            await _userServiceAPI.GetUsers();
-            var model = new UsersViewModel();
-            //var model = new UsersViewModel
-            //{
-            //    Users = await _userServiceAPI.GetUsers()
-            //};
-            //return View(model);
+
+            var model = new UsersViewModel
+            {
+                Users = await _userServiceAPI.GetUsers()
+            };
             return View(model);
         }
     }

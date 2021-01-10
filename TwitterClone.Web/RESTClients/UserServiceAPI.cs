@@ -17,7 +17,7 @@ namespace TwitterClone.Web.RESTClients
         public UserServiceAPI(IConfiguration config, HttpClient httpClient)
         {
             string apiHostAndPort = config.GetSection("APIServiceLocations").GetValue<string>("UserServiceAPI");
-            httpClient.BaseAddress = new Uri($"http://{apiHostAndPort}/api/");
+            httpClient.BaseAddress = new Uri($"http://{apiHostAndPort}/api");
             _restClient = RestService.For<IUserServiceAPI>(httpClient);
         }
 
@@ -26,9 +26,23 @@ namespace TwitterClone.Web.RESTClients
         //{
         //    return await _restClient.GetUsers();
         //}
-        public async Task<string> GetUsers()
+        public async Task<List<User>> GetUsers()
         {
+
             return await _restClient.GetUsers();
+            //try
+            //{
+            //    return await _restClient.GetUsers();
+            //}
+            //catch (ApiException ex)
+            //{
+            //    if (ex.StatusCode == HttpStatusCode.NotFound)
+            //    {
+            //        return null;
+            //    }
+            //    throw;
+            //}
+
         }
         public async Task<User> GetUserById([AliasAs("id")] string customerId)
         {

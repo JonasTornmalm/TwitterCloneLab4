@@ -21,31 +21,39 @@ namespace TwitterClone.Api.UserService.Controllers
             _context = context;
         }
 
-        // GET: api/<UserController>
+        //GET: api/<UserController>
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            return Ok(await _context.Users.ToListAsync());
+        }
+
         //[HttpGet]
-        //public async Task<IActionResult> GetAllAsync()
+        //public async Task<IActionResult> Get()
         //{
-        //    return Ok(await _context.Users.ToListAsync());
+        //    var testList = new List<User>();
+        //    var user = new User()
+        //    {
+        //        Name = "kalle",
+        //        Address = "orma 1234"
+        //    };
+        //    testList.Add(user);
+        //
+        //    return Ok(testList);
         //}
 
-        [HttpGet]
-        public ActionResult<string> Get()
-        {
-            return "webapi (with value 5)";
-        }
-
         // GET api/<UserController>/5
-        [HttpGet]
-        [Route("{userId}", Name = "GetByUserId")]
-        public async Task<IActionResult> GetByUserId(string userId)
-        {
-            var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            return Ok(customer);
-        }
+        //[HttpGet]
+        //[Route("{userId}", Name = "GetByUserId")]
+        //public async Task<IActionResult> GetByUserId(string userId)
+        //{
+        //    var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
+        //    if (customer == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(customer);
+        //}
 
         // POST api/<UserController>
         [HttpPost]
