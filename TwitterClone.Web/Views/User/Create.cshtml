@@ -1,0 +1,33 @@
+﻿@model TwitterClone.Web.ViewModels.UserCreateViewModel
+@{ ViewData["Title"] = "Register User"; }
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+<h3 id="PageTitle">User Management - register user</h3>
+
+<form asp-controller="User" asp-action="Register" method="post">
+    <div class="form-group">
+        <label asp-for="User.FirstName"></label>
+        <input asp-for="User.FirstName" type="text" class="form-control" />
+        <span asp-validation-for="User.FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="User.LastName"></label>
+        <input asp-for="User.LastName" type="text" class="form-control" />
+        <span asp-validation-for="User.LastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="User.EmailAddress"></label>
+        <input asp-for="User.EmailAddress" type="text" class="form-control" />
+        <span asp-validation-for="User.EmailAddress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="User.Password"></label>
+        <input asp-for="User.Password" type="text" class="form-control" />
+        <span asp-validation-for="User.Password" class="text-danger"></span>
+    </div>
+    <span><button id="SubmitButton" type="submit" class="btn btn-default">Register</button></span>
+    <span><a id="CancelButton" asp-action="Index" asp-controller="User" class="btn btn-default">Cancel</a></span>
+</form>

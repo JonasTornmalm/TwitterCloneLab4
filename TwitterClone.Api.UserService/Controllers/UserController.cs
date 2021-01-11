@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TwitterClone.Api.UserService.Data;
 using TwitterClone.Api.UserService.Data.Entities;
+using TwitterClone.Api.UserService.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,27 +28,59 @@ namespace TwitterClone.Api.UserService.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _context.Users.ToListAsync());
+            var users = await _context.Users.ToListAsync();
+
+            return Ok(users);
         }
 
         // GET api/<UserController>/5
-        [HttpGet]
-        [Route("{userId}", Name = "GetByUserId")]
-        public async Task<IActionResult> GetByUserId(string userId)
-        {
-            var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
-            if (customer == null)
-            {
-                return NotFound();
-            }
-            return Ok(customer);
-        }
+        //[HttpGet]
+        //[Route("{userId}", Name = "GetByUserId")]
+        //public async Task<IActionResult> GetByUserId(string userId)
+        //{
+        //    var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
+        //    if (customer == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(customer);
+        //}
 
         // POST api/<UserController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserModel request)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // insert customer
+                    var createUser = new User()
+                    {
+                        Id = "1",
+                        FirstName = request.FirstName,
+                        LastName = request.LastName,
+                        EmailAddress = request.EmailAddress,
+                        Password = request.Password
+                    };
 
+                    _context.Users.Add(createUser);
+                    await _context.SaveChangesAsync();
+        
+                    return Ok();
+                    // return result
+                    //return CreatedAtRoute("GetByCustomerId", new { customerId = customer.CustomerId }, customer);
+                }
+                return BadRequest();
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+                throw;
+            }
         }
 
         // PUT api/<UserController>/5

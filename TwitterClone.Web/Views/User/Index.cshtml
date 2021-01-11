@@ -9,16 +9,20 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Address</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>EmailAddress</th>
+            <th>Password</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var customer in Model.Users)
+        @foreach (var user in Model.Users)
         {
         <tr class="clickable">
-            <td>@customer.Name</td>
-            <td>@customer.Address</td>
+            <td>@user.FirstName</td>
+            <td>@user.LastName</td>
+            <td>@user.EmailAddress</td>
+            <td>@user.Password</td>
         </tr>}
     </tbody>
 </table>

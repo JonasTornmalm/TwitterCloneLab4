@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using TwitterClone.Web.DTOs;
 using TwitterClone.Web.Models;
 
 namespace TwitterClone.Web.RESTClients
@@ -25,7 +26,7 @@ namespace TwitterClone.Web.RESTClients
         {
             return await _restClient.GetUsers();
         }
-        public async Task<User> GetUserById([AliasAs("id")] string customerId)
+        public async Task<UserModel> GetUserById([AliasAs("id")] string customerId)
         {
             try
             {
@@ -42,6 +43,11 @@ namespace TwitterClone.Web.RESTClients
                     throw;
                 }
             }
+        }
+
+        public async Task RegisterCustomer(User registerUser)
+        {
+            await _restClient.RegisterCustomer(registerUser);
         }
     }
 }

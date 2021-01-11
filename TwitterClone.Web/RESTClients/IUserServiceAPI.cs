@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterClone.Web.DTOs;
 using TwitterClone.Web.Models;
 
 namespace TwitterClone.Web.RESTClients
@@ -13,6 +14,9 @@ namespace TwitterClone.Web.RESTClients
         Task<List<User>> GetUsers();
 
         [Get("/user/{id}")]
-        Task<User> GetUserById([AliasAs("id")] string userId);
+        Task<UserModel> GetUserById([AliasAs("id")] string userId);
+
+        [Post("/user")]
+        Task RegisterCustomer(User registerUser);
     }
 }
