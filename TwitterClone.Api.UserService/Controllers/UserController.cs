@@ -28,32 +28,18 @@ namespace TwitterClone.Api.UserService.Controllers
             return Ok(await _context.Users.ToListAsync());
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    var testList = new List<User>();
-        //    var user = new User()
-        //    {
-        //        Name = "kalle",
-        //        Address = "orma 1234"
-        //    };
-        //    testList.Add(user);
-        //
-        //    return Ok(testList);
-        //}
-
         // GET api/<UserController>/5
-        //[HttpGet]
-        //[Route("{userId}", Name = "GetByUserId")]
-        //public async Task<IActionResult> GetByUserId(string userId)
-        //{
-        //    var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
-        //    if (customer == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(customer);
-        //}
+        [HttpGet]
+        [Route("{userId}", Name = "GetByUserId")]
+        public async Task<IActionResult> GetByUserId(string userId)
+        {
+            var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            return Ok(customer);
+        }
 
         // POST api/<UserController>
         [HttpPost]

@@ -21,28 +21,9 @@ namespace TwitterClone.Web.RESTClients
             _restClient = RestService.For<IUserServiceAPI>(httpClient);
         }
 
-
-        //public async Task<List<User>> GetUsers()
-        //{
-        //    return await _restClient.GetUsers();
-        //}
         public async Task<List<User>> GetUsers()
         {
-
             return await _restClient.GetUsers();
-            //try
-            //{
-            //    return await _restClient.GetUsers();
-            //}
-            //catch (ApiException ex)
-            //{
-            //    if (ex.StatusCode == HttpStatusCode.NotFound)
-            //    {
-            //        return null;
-            //    }
-            //    throw;
-            //}
-
         }
         public async Task<User> GetUserById([AliasAs("id")] string customerId)
         {
