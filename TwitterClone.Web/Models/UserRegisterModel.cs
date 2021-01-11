@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TwitterClone.Web.Models
 {
-    public class UserModel
+    public class UserRegisterModel
     {
         public string UserId { get; set; }
 

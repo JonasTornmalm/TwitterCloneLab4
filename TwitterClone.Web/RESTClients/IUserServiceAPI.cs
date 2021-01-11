@@ -10,13 +10,13 @@ namespace TwitterClone.Web.RESTClients
 {
     public interface IUserServiceAPI
     {
-        [Get("/user")]
-        Task<List<User>> GetUsers();
+        [Get("/userregister")]
+        Task<List<UserDTO>> GetUsers();
 
-        [Get("/user/{id}")]
-        Task<UserModel> GetUserById([AliasAs("id")] string userId);
+        [Post("/userregister")]
+        Task RegisterUser(UserDTO registerUser);
 
-        [Post("/user")]
-        Task RegisterCustomer(User registerUser);
+        [Get("/userlogin")]
+        Task<UserDTO> TryLogin([Body(BodySerializationMethod.Json)] UserDTO loginUser);
     }
 }

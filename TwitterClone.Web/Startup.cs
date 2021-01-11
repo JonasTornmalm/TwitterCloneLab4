@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterClone.Web.Data;
+using TwitterClone.Web.Data.Entities;
 using TwitterClone.Web.RESTClients;
 
 namespace TwitterClone.Web
@@ -23,6 +26,13 @@ namespace TwitterClone.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // add DBContext
+            var sqlConnectionString = Configuration.GetConnectionString("IdentityCN");
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(sqlConnectionString));
+
+            services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<AppIdentityDbContext>();
+
             services.AddControllersWithViews();
 
             services.AddHttpClient<IUserServiceAPI, UserServiceAPI>();
@@ -43,6 +53,7 @@ namespace TwitterClone.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

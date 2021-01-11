@@ -16,10 +16,10 @@ namespace TwitterClone.Api.UserService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserRegisterController : ControllerBase
     {
         private readonly UserDbContext _context;
-        public UserController(UserDbContext context)
+        public UserRegisterController(UserDbContext context)
         {
             _context = context;
         }
@@ -29,22 +29,47 @@ namespace TwitterClone.Api.UserService.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var users = await _context.Users.ToListAsync();
-
+        
             return Ok(users);
         }
 
         // GET api/<UserController>/5
-        //[HttpGet]
-        //[Route("{userId}", Name = "GetByUserId")]
-        //public async Task<IActionResult> GetByUserId(string userId)
-        //{
-        //    var customer = await _context.Users.FirstOrDefaultAsync(c => c.UserId == userId);
-        //    if (customer == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return Ok(customer);
-        //}
+        [HttpGet]
+        [Route("{userEmail}")]
+        public async Task<IActionResult> GetByUserEmail(string userEmail)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.EmailAddress == userEmail);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+
+        [HttpGet]
+        [Route("/login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginUserModel request)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var userInDb = await _context.Users.Where(x => x.EmailAddress == request.EmailAddress).FirstOrDefaultAsync();
+        
+                    if (userInDb != null)
+                        return Ok(userInDb);
+                }
+                return BadRequest();
+            }
+            catch (DbUpdateException)
+            {
+                ModelState.AddModelError("", "Unable to save changes. " +
+                    "Try again, and if the problem persists " +
+                    "see your system administrator.");
+                return StatusCode(StatusCodes.Status500InternalServerError);
+                throw;
+            }
+        }
 
         // POST api/<UserController>
         [HttpPost]

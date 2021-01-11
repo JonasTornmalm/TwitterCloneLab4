@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TwitterClone.Web.Data.Entities;
 using TwitterClone.Web.DTOs;
 using TwitterClone.Web.Models;
 using TwitterClone.Web.RESTClients;
@@ -10,11 +12,11 @@ using TwitterClone.Web.ViewModels;
 
 namespace TwitterClone.Web.Controllers
 {
-    public class UserController : Controller
+    public class UserRegisterController : Controller
     {
         private readonly IUserServiceAPI _userServiceAPI;
 
-        public UserController(IUserServiceAPI userServiceAPI)
+        public UserRegisterController(IUserServiceAPI userServiceAPI)
         {
             _userServiceAPI = userServiceAPI;
         }
@@ -22,8 +24,7 @@ namespace TwitterClone.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["Message"] = "Hello from webfrontend";
-
+        
             var model = new UsersViewModel
             {
                 Users = await _userServiceAPI.GetUsers()
@@ -36,7 +37,7 @@ namespace TwitterClone.Web.Controllers
         {
             var model = new UserCreateViewModel
             {
-                User = new UserModel()
+                User = new UserRegisterModel()
             };
             return View(model);
         }
@@ -46,15 +47,16 @@ namespace TwitterClone.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var registerUser = new User()
+                var registerUser = new UserDTO()
                 {
                     FirstName = inputModel.User.FirstName,
                     LastName = inputModel.User.LastName,
                     EmailAddress = inputModel.User.EmailAddress,
                     Password = inputModel.User.Password
                 };
-                await _userServiceAPI.RegisterCustomer(registerUser);
-                return RedirectToAction("Index");
+                await _userServiceAPI.RegisterUser(registerUser);
+
+                return RedirectToAction("Index", "UserRegister");
             }
             else
             {

@@ -22,15 +22,19 @@ namespace TwitterClone.Web.RESTClients
             _restClient = RestService.For<IUserServiceAPI>(httpClient);
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<List<UserDTO>> GetUsers()
         {
             return await _restClient.GetUsers();
         }
-        public async Task<UserModel> GetUserById([AliasAs("id")] string customerId)
+        public async Task RegisterUser(UserDTO registerUser)
+        {
+            await _restClient.RegisterUser(registerUser);
+        }
+        public async Task<UserDTO> TryLogin(UserDTO userDTO)
         {
             try
             {
-                return await _restClient.GetUserById(customerId);
+                return await _restClient.TryLogin(userDTO);
             }
             catch (ApiException ex)
             {
@@ -43,11 +47,6 @@ namespace TwitterClone.Web.RESTClients
                     throw;
                 }
             }
-        }
-
-        public async Task RegisterCustomer(User registerUser)
-        {
-            await _restClient.RegisterCustomer(registerUser);
         }
     }
 }

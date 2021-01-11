@@ -7,7 +7,7 @@
 
 <h3 id="PageTitle">User Management - register user</h3>
 
-<form asp-controller="User" asp-action="Register" method="post">
+<form asp-controller="UserRegister" asp-action="Register" method="post">
     <div class="form-group">
         <label asp-for="User.FirstName"></label>
         <input asp-for="User.FirstName" type="text" class="form-control" />
@@ -29,5 +29,5 @@
         <span asp-validation-for="User.Password" class="text-danger"></span>
     </div>
     <span><button id="SubmitButton" type="submit" class="btn btn-default">Register</button></span>
-    <span><a id="CancelButton" asp-action="Index" asp-controller="User" class="btn btn-default">Cancel</a></span>
+    <span><a id="CancelButton" asp-action="Index" asp-controller="UserRegister" class="btn btn-default">Cancel</a></span>
 </form>

@@ -1,15 +1,13 @@
-﻿using Refit;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TwitterClone.Web.DTOs;
 using TwitterClone.Web.Models;
 
 namespace TwitterClone.Web.ViewModels
 {
-    public class UsersViewModel
+    public class UserLoginViewModel
     {
-        public IEnumerable<UserDTO> Users { get; set; }
+        public UserLoginModel User { get; set; }
     }
 }

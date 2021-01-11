@@ -8,6 +8,6 @@ namespace TwitterClone.Web.ViewModels
 {
     public class UserCreateViewModel
     {
-        public UserModel User { get; set; }
+        public UserRegisterModel User { get; set; }
     }
 }
