@@ -57,7 +57,7 @@ namespace TwitterClone.Api.UserService.Controllers
                     // insert customer
                     var createUser = new User()
                     {
-                        Id = "1",
+                        Id = Guid.NewGuid(),
                         FirstName = request.FirstName,
                         LastName = request.LastName,
                         EmailAddress = request.EmailAddress,
