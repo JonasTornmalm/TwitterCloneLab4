@@ -1,0 +1,38 @@
+﻿@model TwitterClone.Web.ViewModels.MessagesViewModel
+@{
+    ViewData["Title"] = "Messages Overview";
+}
+<h3 id="PageTitle">Messages</h3>
+
+<partial name="_SendMessage" />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+
+@Html.ValidationSummary(true)
+
+@if (Model.Messages != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Text</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model.Messages)
+            {
+                <tr class="clickable">
+                    <td>@message.Username</td>
+                    <td>@message.Text</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h2>no data</h2>
+}

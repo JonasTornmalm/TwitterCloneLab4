@@ -17,6 +17,6 @@ namespace TwitterClone.Web.RESTClients
         Task RegisterUser(UserDTO registerUser);
 
         [Get("/userlogin")]
-        Task<UserDTO> TryLogin([Body(BodySerializationMethod.Json)] UserDTO loginUser);
+        Task<UserDTO> TryLogin([Body(BodySerializationMethod.Serialized)] UserDTO loginUser);
     }
 }

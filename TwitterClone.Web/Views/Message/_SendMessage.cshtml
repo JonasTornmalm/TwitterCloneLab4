@@ -1,0 +1,23 @@
+﻿@model TwitterClone.Web.ViewModels.MessagesViewModel
+
+@{
+    ViewData["Title"] = "Send Message";
+    var currentUserName = User.Identity.Name;
+}
+
+@Html.ValidationSummary(true)
+
+<form asp-controller="Message" asp-action="Send" method="post">
+    <div class="form-group">
+        <label asp-for="SendMessage.Username"></label>
+        <input readonly="readonly" asp-for="SendMessage.Username" value="@(!string.IsNullOrWhiteSpace(currentUserName) ? currentUserName : string.Empty)" class="form-control"/>
+        <span asp-validation-for="SendMessage.Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SendMessage.Text"></label>
+        <input asp-for="SendMessage.Text" type="text" class="form-control" />
+        <span asp-validation-for="SendMessage.Text" class="text-danger"></span>
+    </div>
+    <span><button id="SubmitButton" type="submit" class="btn btn-default">Send</button></span>
+    <span><a id="CancelButton" asp-action="Index" asp-controller="Home" class="btn btn-default">Cancel</a></span>
+</form>

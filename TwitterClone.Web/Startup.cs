@@ -36,6 +36,7 @@ namespace TwitterClone.Web
             services.AddControllersWithViews();
 
             services.AddHttpClient<IUserServiceAPI, UserServiceAPI>();
+            services.AddHttpClient<IMessagingServiceAPI, MessagingServiceAPI>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
