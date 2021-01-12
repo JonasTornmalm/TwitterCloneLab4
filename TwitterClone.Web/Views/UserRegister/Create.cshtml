@@ -20,7 +20,7 @@
     </div>
     <div class="form-group">
         <label asp-for="User.EmailAddress"></label>
-        <input asp-for="User.EmailAddress" type="text" class="form-control" />
+        <input asp-for="User.EmailAddress" type="email" class="form-control" />
         <span asp-validation-for="User.EmailAddress" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -29,5 +29,5 @@
         <span asp-validation-for="User.Password" class="text-danger"></span>
     </div>
     <span><button id="SubmitButton" type="submit" class="btn btn-default">Register</button></span>
-    <span><a id="CancelButton" asp-action="Index" asp-controller="UserRegister" class="btn btn-default">Cancel</a></span>
+    <span><a id="CancelButton" asp-action="Index" asp-controller="Home" class="btn btn-default">Cancel</a></span>
 </form>

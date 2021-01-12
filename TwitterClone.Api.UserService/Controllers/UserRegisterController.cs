@@ -46,31 +46,6 @@ namespace TwitterClone.Api.UserService.Controllers
             return Ok(user);
         }
 
-        [HttpGet]
-        [Route("/login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginUserModel request)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var userInDb = await _context.Users.Where(x => x.EmailAddress == request.EmailAddress).FirstOrDefaultAsync();
-        
-                    if (userInDb != null)
-                        return Ok(userInDb);
-                }
-                return BadRequest();
-            }
-            catch (DbUpdateException)
-            {
-                ModelState.AddModelError("", "Unable to save changes. " +
-                    "Try again, and if the problem persists " +
-                    "see your system administrator.");
-                return StatusCode(StatusCodes.Status500InternalServerError);
-                throw;
-            }
-        }
-
         // POST api/<UserController>
         [HttpPost]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserModel request)

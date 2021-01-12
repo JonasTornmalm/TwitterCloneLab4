@@ -1,29 +1,32 @@
 ﻿@model TwitterClone.Web.ViewModels.UsersViewModel
-@{ 
+@{
     ViewData["Title"] = "User Overview";
 }
 <h3 id="PageTitle">User Management - overview</h3>
 
+@Html.ValidationSummary(true)
+
 @if (Model.Users != null)
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>EmailAddress</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in Model.Users)
-        {
-        <tr class="clickable">
-            <td>@user.FirstName</td>
-            <td>@user.LastName</td>
-            <td>@user.EmailAddress</td>
-        </tr>}
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>EmailAddress</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr class="clickable">
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                    <td>@user.EmailAddress</td>
+                </tr>
+}
+        </tbody>
+    </table>
 }
 else
 {

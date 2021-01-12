@@ -30,7 +30,7 @@ namespace TwitterClone.Web
             var sqlConnectionString = Configuration.GetConnectionString("IdentityCN");
             services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
-            services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<AppIdentityDbContext>();
 
             services.AddControllersWithViews();
@@ -61,6 +61,7 @@ namespace TwitterClone.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
