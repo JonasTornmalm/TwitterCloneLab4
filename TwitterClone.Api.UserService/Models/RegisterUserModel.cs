@@ -8,6 +8,7 @@ namespace TwitterClone.Api.UserService.Models
 {
     public class RegisterUserModel
     {
+        public string UserId { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]

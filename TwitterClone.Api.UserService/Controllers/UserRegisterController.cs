@@ -54,10 +54,10 @@ namespace TwitterClone.Api.UserService.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    // insert customer
+                    // insert user
                     var createUser = new User()
                     {
-                        Id = Guid.NewGuid(),
+                        Id = request.UserId,
                         FirstName = request.FirstName,
                         LastName = request.LastName,
                         EmailAddress = request.EmailAddress,
@@ -68,8 +68,6 @@ namespace TwitterClone.Api.UserService.Controllers
                     await _context.SaveChangesAsync();
         
                     return Ok();
-                    // return result
-                    //return CreatedAtRoute("GetByCustomerId", new { customerId = customer.CustomerId }, customer);
                 }
                 return BadRequest();
             }

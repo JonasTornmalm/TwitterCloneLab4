@@ -2,6 +2,16 @@ version: '3.4'
 
 services:
 
+  twitterclone.api.fileservice:
+    ports:
+    - "5400:80"
+    image: ${DOCKER_REGISTRY-}twittercloneapifileservice
+    build:
+      context: .
+      dockerfile: TwitterClone.Api.FileService/Dockerfile
+    depends_on:
+        - db
+
   twitterclone.api.messagingservice:
     ports:
     - "5300:80"
@@ -34,6 +44,8 @@ services:
       context: .
       dockerfile: TwitterClone.Web/Dockerfile
     depends_on:
+      - twitterclone.api.fileservice
+      - twitterclone.api.messagingservice
       - twitterclone.api.userservice
       - db
 

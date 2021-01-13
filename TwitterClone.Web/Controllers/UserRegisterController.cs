@@ -49,8 +49,11 @@ namespace TwitterClone.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var guidId = Guid.NewGuid();
+                var userId = guidId.ToString();
                 var registerUser = new UserDTO()
                 {
+                    UserId = userId,
                     FirstName = inputModel.User.FirstName,
                     LastName = inputModel.User.LastName,
                     EmailAddress = inputModel.User.EmailAddress,
@@ -63,6 +66,7 @@ namespace TwitterClone.Web.Controllers
                 {
                     var identityUser = new ApplicationUser()
                     {
+                        Id = registerUser.UserId,
                         UserName = registerUser.EmailAddress,
                         Email = registerUser.EmailAddress,
                     };

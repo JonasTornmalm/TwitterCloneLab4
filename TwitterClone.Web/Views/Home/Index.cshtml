@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TwitterClone.Web.ViewModels.IdentityViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,5 +8,6 @@
     <a asp-controller="userregister" asp-action="index">List of users registered</a><br />
     <a asp-controller="userregister" asp-action="create">Register user</a><br />
     <a asp-controller="userlogin" asp-action="index">Login user</a><br />
-    <a asp-controller="message" asp-action="index">Forum</a>
+    <a asp-controller="message" asp-action="index">Forum</a><br />
+    <a asp-controller="profile" asp-action="index" asp-route-userId="@Model.UserId">Profile</a>
 </div>

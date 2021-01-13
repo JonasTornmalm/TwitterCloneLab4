@@ -1,18 +1,19 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TwitterClone.Web.Data;
-using TwitterClone.Web.Data.Entities;
-using TwitterClone.Web.RESTClients;
+using TwitterClone.Api.FileService.Data;
 
-namespace TwitterClone.Web
+namespace TwitterClone.Api.FileService
 {
     public class Startup
     {
@@ -27,17 +28,14 @@ namespace TwitterClone.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // add DBContext
-            var sqlConnectionString = Configuration.GetConnectionString("IdentityCN");
-            services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(sqlConnectionString));
+            var sqlConnectionString = Configuration.GetConnectionString("FileServiceCN");
+            services.AddDbContext<FileDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
-
-            services.AddControllersWithViews();
-
-            services.AddHttpClient<IUserServiceAPI, UserServiceAPI>();
-            services.AddHttpClient<IMessagingServiceAPI, MessagingServiceAPI>();
-            services.AddHttpClient<IFileServiceAPI, FileServiceAPI>();
+            services.AddControllers();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TwitterClone.Api.FileService", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,24 +44,17 @@ namespace TwitterClone.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TwitterClone.Api.FileService v1"));
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
-            app.UseStaticFiles();
 
             app.UseRouting();
 
-            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
