@@ -39,9 +39,14 @@ namespace TwitterClone.Web.RESTClients
             }
         }
 
-        public async Task UploadProfileImage(string userId, ByteArrayPart bytePart)
+        public async Task<HttpResponseMessage> UploadProfileImage(string userId, ByteArrayPart bytePart)
         {
-            await _restClient.UploadProfileImage(userId, bytePart);
+            return await _restClient.UploadProfileImage(userId, bytePart);
+        }
+
+        public async Task<HttpResponseMessage> DeleteProfileImage(string userId)
+        {
+            return await _restClient.DeleteProfileImage(userId);
         }
     }
 }

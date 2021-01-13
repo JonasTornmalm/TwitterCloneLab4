@@ -15,6 +15,9 @@ namespace TwitterClone.Web.RESTClients
         Task<ByteArrayPart> GetUserProfileImage(string userId);
 
         [Post("/profileimage/{userId}")]
-        Task UploadProfileImage(string userId, ByteArrayPart bytePart);
+        Task<HttpResponseMessage> UploadProfileImage(string userId, ByteArrayPart bytePart);
+
+        [Delete("/profileimage/{userId}")]
+        Task<HttpResponseMessage> DeleteProfileImage(string userId);
     }
 }

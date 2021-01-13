@@ -17,7 +17,7 @@
                     <img src="@imgSrc" />
                 </div>
                 <ul class="buttons">
-                    <li><a class="reupload-image" href="javascript:void(0)"><i class="fas fa-undo"></i>Reset</a></li>
+                    <li><a class="button-outline-large" asp-action="deleteProfileImage" asp-controller="profile" asp-route-userId="@Model.UserId">Delete</a></li>
                 </ul>
             </div>
         </div>
@@ -36,7 +36,6 @@
                 </div>
             </div>
             <p class="upload-text">Supported formats:<span>jpg</span><span>jpeg</span><span>png</span></p>
-            <a class="reset-image" style="left: 50%;" href="javascript:void(0)"><i class="fas fa-undo"></i>Reset</a>
         </div>
         <ul class="buttons">
             @Html.HiddenFor(x => x.UserId)
@@ -49,13 +48,4 @@
 @section Scripts {
     <script src="~/js/croppie-2.6.4.js"></script>
     <script src="~/js/image-upload.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.reupload-image').on('click', function () {
-                $('#uploaded-image').fadeOut(function () {
-                    $('#upload-image-form').fadeIn();
-                });
-            });
-        });
-    </script>
 }

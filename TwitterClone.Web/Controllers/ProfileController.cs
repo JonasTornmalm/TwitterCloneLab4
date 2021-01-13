@@ -4,6 +4,7 @@ using Refit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using TwitterClone.Web.Data;
 using TwitterClone.Web.DTOs;
@@ -52,7 +53,7 @@ namespace TwitterClone.Web.Controllers
             return View(model);
         }
 
-        [HttpPost("profile-image")]
+        [HttpPost("upload-profile-image")]
         public async Task<IActionResult> UploadAsync(ProfileImageFileModel model)
         {
             if (string.IsNullOrWhiteSpace(model.Base64Image) || model.Base64Image.Length < 7)
@@ -77,9 +78,36 @@ namespace TwitterClone.Web.Controllers
 
             var bytePart = new ByteArrayPart(bytes, "image", "application/json");
 
-            await _fileServiceAPI.UploadProfileImage(model.UserId, bytePart);
+            var response = await _fileServiceAPI.UploadProfileImage(model.UserId, bytePart);
+
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                ModelState.AddModelError(string.Empty, "User already has a profile picture, delete it to upload new");
+                return View("Index", model);
+            }
 
             return RedirectToAction("Index", new { userId = model.UserId });
+        }
+
+        [HttpGet("delete-profile-image")]
+        public async Task<IActionResult> DeleteProfileImage(string userId)
+        {
+            var user = await _context.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Could not find employee.");
+                return RedirectToAction("index", "profile", new { id = userId });
+            }
+
+            var response = await _fileServiceAPI.DeleteProfileImage(userId);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError(string.Empty, "Was not able to delete profile image.");
+            }
+
+            return RedirectToAction("index", "profile", new { userId = userId });
         }
     }
 }

@@ -69,9 +69,18 @@ namespace TwitterClone.Api.FileService.Controllers
         }
 
         // DELETE api/<FileController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("{userId}")]
+        public async Task<IActionResult> DeleteProfileImage(string userId)
         {
+            var profileImageInDb = await _context.ProfileImageFiles.Where(x => x.UserId == userId).FirstOrDefaultAsync();
+
+            if (profileImageInDb == null)
+                return BadRequest("No profile image found");
+
+            _context.ProfileImageFiles.Remove(profileImageInDb);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }
