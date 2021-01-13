@@ -6,50 +6,46 @@
     var imgSrc = String.Format("data:{0};base64,{1}", mime, base64);
 }
 
-<div class="content">
-    <div class="content-center">
-        <div class="content-cell-center">
-            <div class="setup-company">
-                <h1>Upload profile image</h1>
-                @if (Model.HasLogo)
-                {
-                    <div id="uploaded-image" style="position: relative;">
-                        <div class="upload-logo">
-                            <div class="uploaded-img-area" style="display: block">
-                                <img src="@imgSrc" />
-                            </div>
-                            <ul class="buttons">
-                                <li><a class="reupload-image" href="javascript:void(0)"><i class="fas fa-undo"></i>Reset</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                }
-                @using (Html.BeginForm("upload", "profile", new { Model.UserId }, FormMethod.Post, true, new { id = "upload-image-form", style = Model.HasLogo ? "display:none" : string.Empty }))
-                {
-                    @Html.ValidationSummary(false);
-                    <div class="upload-logo">
-                        <div class="img-area"></div>
-                        <div class="upload-area">
-                            <div>
-                                <i class="fad fa-image"></i>
-                                <p id="upload-image-button">Select a file</p>
-                                <input id="upload-image-hidden" type="hidden" name="Base64Image">
-                                <input id="fileupload" type="file" name="file" data-url="">
-                            </div>
-                        </div>
-                        <p class="upload-text">Supported formats:<span>jpg</span><span>jpeg</span><span>png</span></p>
-                        <a class="reset-image" style="left: 50%;" href="javascript:void(0)"><i class="fas fa-undo"></i>Reset</a>
-                    </div>
-                    <ul class="buttons">
-                        @Html.HiddenFor(x => x.UserId)
-                        <li><a class="button-outline-large" asp-action="index" asp-controller="home">Cancel</a></li>
-                        <li><button class="button-fill-large">Save</button></li>
-                    </ul>
-                }
+
+<div class="setup-company">
+    <h1>Upload profile image</h1>
+    @if (Model.HasLogo)
+    {
+        <div id="uploaded-image" style="position: relative;">
+            <div class="upload-logo">
+                <div class="uploaded-img-area" style="display: block">
+                    <img src="@imgSrc" />
+                </div>
+                <ul class="buttons">
+                    <li><a class="reupload-image" href="javascript:void(0)"><i class="fas fa-undo"></i>Reset</a></li>
+                </ul>
             </div>
         </div>
-    </div>
+    }
+    @using (Html.BeginForm("upload", "profile", new { Model.UserId }, FormMethod.Post, true, new { id = "upload-image-form", style = Model.HasLogo ? "display:none" : string.Empty }))
+    {
+        @Html.ValidationSummary(false);
+        <div class="upload-logo">
+            <div class="img-area"></div>
+            <div class="upload-area">
+                <div>
+                    <i class="fad fa-image"></i>
+                    <p id="upload-image-button">Select a file</p>
+                    <input id="upload-image-hidden" type="hidden" name="Base64Image">
+                    <input id="fileupload" type="file" name="file" data-url="">
+                </div>
+            </div>
+            <p class="upload-text">Supported formats:<span>jpg</span><span>jpeg</span><span>png</span></p>
+            <a class="reset-image" style="left: 50%;" href="javascript:void(0)"><i class="fas fa-undo"></i>Reset</a>
+        </div>
+        <ul class="buttons">
+            @Html.HiddenFor(x => x.UserId)
+            <li><a class="button-outline-large" asp-action="index" asp-controller="home">Cancel</a></li>
+            <li><button class="button-fill-large">Save</button></li>
+        </ul>
+    }
 </div>
+
 @section Scripts {
     <script src="~/js/croppie-2.6.4.js"></script>
     <script src="~/js/image-upload.js"></script>

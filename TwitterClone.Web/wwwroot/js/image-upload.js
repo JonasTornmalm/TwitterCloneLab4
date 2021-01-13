@@ -7,8 +7,7 @@
     boundary: {
       width: 420,
       height: 420
-    },
-    enableResize: true
+    }
   });
 }
 $(document).ready(function () {
