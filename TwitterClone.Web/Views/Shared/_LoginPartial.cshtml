@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TwitterClone.Web.Data.Entities
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Hello @User.Identity.Name!</a>
+    </li>
+    <li>
+        <form class="nav-link text-dark" asp-action="Logout" asp-controller="UserLogin" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li>
+        <a class="nav-link text-dark" asp-action="Create" asp-controller="UserRegister">Register</a>
+    </li>
+    <li>
+        <a class="nav-link text-dark" asp-action="Index" asp-controller="UserLogin">Login</a>
+    </li>
+    
+    
+}

@@ -80,7 +80,7 @@ namespace TwitterClone.Web.Controllers
                     }
                 }
 
-                return RedirectToAction("Index", "UserRegister");
+                return RedirectToAction("Index", "UserLogin");
             }
             else
             {
