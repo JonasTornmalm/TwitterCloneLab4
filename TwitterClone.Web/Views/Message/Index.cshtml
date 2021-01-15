@@ -14,7 +14,7 @@
 
 @if (Model.Messages != null)
 {
-    <table class="table">
+    <table id="message-table" class="table">
         <thead>
             <tr>
                 <th>Username</th>
@@ -24,7 +24,7 @@
         <tbody>
             @foreach (var message in Model.Messages)
             {
-                <tr class="clickable">
+                <tr id="message-row" class="clickable">
                     <td>@message.Username</td>
                     <td>@message.Text</td>
                 </tr>
