@@ -1,25 +1,23 @@
 describe('My test suite', () => {
 	before(() => {
-		cy.intercept('GET', 'http://localhost:8080/api/Messaging').as('getMessages')
-		cy.wait(['@getMessages'])
-    })
+		cy.intercept('GET', 'http://localhost:5300/api/Messaging').as('getMessages')
+	})
+
+	after(() => {
+		cy.request(
+			'DELETE',
+			'http://localhost:5300/api/Messaging',
+			{ "text": "take out the bins" }
+		)
+	})
 
 	beforeEach(() => {
 		cy.visit("http://localhost:5200/Message");
 	})
 
+	it('OK, register and create a message', () => {
+		cy.visit("http://localhost:5200/UserLogin");
 
-	it('OK, create a message', () => {
-		var input = cy.get('input[cy-data="new-message"]');
-		input.type('take out the bins');
-		cy.get('#SubmitButton').click();
-
-		if (input.innerhtml !== null) {
-			cy.visit("http://localhost:5200/UserLogin");
-		}
-		else {
-
-		}
 		cy.get('#inputMail').type('jonas@mail.se');
 		cy.get('#inputPassword').type('Adam123!');
 		cy.get('#SubmitButton').click();
@@ -37,12 +35,15 @@ describe('My test suite', () => {
 		cy.get('#inputMail').type('fake@mail.se');
 		cy.get('#inputPassword').type('Fake123!');
 		cy.get('#SubmitButton').click();
-		
+
 
 		cy.visit('http://localhost:5200/Message');
-		var input = cy.get('input[cy-data="new-message"]').type('Logged in now, take out the bins');
+		cy.get('input[cy-data="new-message"]').type('take out the bins');
 		cy.get('#SubmitButton').click();
 
 		cy.get('#message-table').find('tbody').find('tr').should('have.length', 1);
+
+		cy.visit('http://localhost:5200/userregister');
+		cy.get('#deleteUser').click();
 	})
 })

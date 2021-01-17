@@ -23,6 +23,10 @@
                     <td>@user.FirstName</td>
                     <td>@user.LastName</td>
                     <td>@user.EmailAddress</td>
+                    @if (user.EmailAddress == User.Identity.Name)
+                    {
+                        <td><a id="deleteUser" asp-action="Delete" asp-controller="UserRegister" asp-route-userEmail="@User.Identity.Name">Delete</a></td>
+                    }
                 </tr>
 }
         </tbody>

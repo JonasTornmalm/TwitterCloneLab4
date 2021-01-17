@@ -30,6 +30,10 @@ namespace TwitterClone.Web.RESTClients
         {
             await _restClient.RegisterUser(registerUser);
         }
+        public async Task<HttpResponseMessage> DeleteUser(DeleteUserDTO deleteUserDto)
+        {
+            return await _restClient.DeleteUser(deleteUserDto);
+        }
         public async Task<UserDTO> TryLogin(UserDTO userDTO)
         {
             try

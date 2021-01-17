@@ -60,9 +60,24 @@ namespace TwitterClone.Api.MessagingService.Controllers
         }
 
         // DELETE api/<MessagingController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteMessageDTO deleteMessageDto)
         {
+            try
+            {
+                var messageToRemove = await _context.Messages.SingleOrDefaultAsync(message => message.Text == deleteMessageDto.Text);
+                if (messageToRemove is null)
+                {
+                    return NotFound();
+                }
+                _context.Messages.Remove(messageToRemove);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

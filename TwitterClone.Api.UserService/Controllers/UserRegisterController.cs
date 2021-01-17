@@ -88,9 +88,24 @@ namespace TwitterClone.Api.UserService.Controllers
         }
 
         // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromBody] DeleteUserDTO deleteUserDto)
         {
+            try
+            {
+                var userToRemove = await _context.Users.SingleOrDefaultAsync(x => x.EmailAddress == deleteUserDto.Email);
+                if (userToRemove is null)
+                {
+                    return NotFound();
+                }
+                _context.Users.Remove(userToRemove);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }

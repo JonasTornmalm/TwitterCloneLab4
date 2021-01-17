@@ -49,21 +49,21 @@ namespace TwitterClone.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var guidId = Guid.NewGuid();
-                var userId = guidId.ToString();
-                var registerUser = new UserDTO()
-                {
-                    UserId = userId,
-                    FirstName = inputModel.User.FirstName,
-                    LastName = inputModel.User.LastName,
-                    EmailAddress = inputModel.User.EmailAddress,
-                    Password = inputModel.User.Password
-                };
-                await _userServiceAPI.RegisterUser(registerUser);
-
-                var doesUserExist = await _userManager.FindByEmailAsync(registerUser.EmailAddress);
+                var doesUserExist = await _userManager.FindByEmailAsync(inputModel.User.EmailAddress);
                 if (doesUserExist == null)
                 {
+                    var guidId = Guid.NewGuid();
+                    var userId = guidId.ToString();
+                    var registerUser = new UserDTO()
+                    {
+                        UserId = userId,
+                        FirstName = inputModel.User.FirstName,
+                        LastName = inputModel.User.LastName,
+                        EmailAddress = inputModel.User.EmailAddress,
+                        Password = inputModel.User.Password
+                    };
+                    await _userServiceAPI.RegisterUser(registerUser);
+
                     var identityUser = new ApplicationUser()
                     {
                         Id = registerUser.UserId,
@@ -79,12 +79,50 @@ namespace TwitterClone.Web.Controllers
                         return View("Index");
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("", "A user is already registered with that email.");
+                    return View("Create", inputModel);
+                }
 
                 return RedirectToAction("Index", "UserLogin");
             }
             else
             {
                 return View("Create", inputModel);
+            }
+        }
+
+        [HttpGet("delete/{userEmail}")]
+        public async Task<IActionResult> Delete(string userEmail)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(userEmail);
+                if (user != null)
+                {
+                    var deleteUserDTO = new DeleteUserDTO()
+                    {
+                        Email = user.Email
+                    };
+                    var response = await _userServiceAPI.DeleteUser(deleteUserDTO);
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        ModelState.AddModelError("", "Could not delete user in userservice");
+                        return RedirectToAction("Index");
+                    }
+                    await _userManager.DeleteAsync(user);
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "was not able delete user");
+                    return RedirectToAction("Index");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index");
             }
         }
     }

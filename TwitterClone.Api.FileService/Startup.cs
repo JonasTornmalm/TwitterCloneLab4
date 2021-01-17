@@ -32,10 +32,6 @@ namespace TwitterClone.Api.FileService
             services.AddDbContext<FileDbContext>(options => options.UseSqlServer(sqlConnectionString));
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "TwitterClone.Api.FileService", Version = "v1" });
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,8 +40,6 @@ namespace TwitterClone.Api.FileService
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TwitterClone.Api.FileService v1"));
             }
 
             app.UseRouting();
